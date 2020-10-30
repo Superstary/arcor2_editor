@@ -58,7 +58,7 @@ namespace Base {
         /// </summary>
         public event AREditorEventArgs.StringEventHandler OnLogicItemRemoved;
         /// <summary>
-        /// Invoked when logic item updated. Contains info of updated logic item. 
+        /// Invoked when logic item updated. Contains info of updated logic item.
         /// </summary>
         public event AREditorEventArgs.LogicItemChangedEventHandler OnLogicItemUpdated;
         public event AREditorEventArgs.StringEventHandler OnProjectRemoved;
@@ -102,7 +102,10 @@ namespace Base {
         /// </summary>
         private string serverDomain;
 
-       
+        private void Start()
+        {
+            ConnectToServer("192.168.0.9", 6789);
+        }
         /// <summary>
         /// Callbeck when connection to the server is closed
         /// </summary>
@@ -135,7 +138,7 @@ namespace Base {
         /// <param name="domain">Domain name or IP address of server</param>
         /// <param name="port">Server port</param>
         public async void ConnectToServer(string domain, int port) {
-           
+
             GameManager.Instance.ConnectionStatus = GameManager.ConnectionStatusEnum.Connecting;
             try {
             APIDomainWS = GetWSURI(domain, port);
@@ -191,7 +194,7 @@ namespace Base {
             return serverDomain;
         }
 
-       
+
         /// <summary>
         /// Create websocket URI from domain name and port
         /// </summary>
@@ -229,7 +232,7 @@ namespace Base {
             }
             SendWebSocketMessage(data);
         }
-      
+
         /// <summary>
         /// Sends data to server
         /// </summary>
@@ -252,7 +255,7 @@ namespace Base {
                 @event = "",
                 request = ""
             };
-            
+
             var dispatch = JsonConvert.DeserializeAnonymousType(data, dispatchType);
 
             if (dispatch?.response == null && dispatch?.request == null && dispatch?.@event == null)
@@ -266,7 +269,7 @@ namespace Base {
                 } else {
                     // TODO: response to unknown request
                 }
-                   
+
             } else if (dispatch.@event != null) {
                 switch (dispatch.@event) {
                     case "SceneChanged":
@@ -370,7 +373,7 @@ namespace Base {
 
         }
 
-        
+
 
         /// <summary>
         /// Waits until response with selected ID is recieved.
@@ -419,14 +422,14 @@ namespace Base {
                     }
                 }
             });
-            
+
         }
 
         /// <summary>
         /// Handles changes on project
         /// </summary>
         /// <param name="obj">Message from server</param>
-        private void HandleProjectChanged(string obj) {            
+        private void HandleProjectChanged(string obj) {
             ProjectManager.Instance.ProjectChanged = true;
             IO.Swagger.Model.ProjectChanged eventProjectChanged = JsonConvert.DeserializeObject<IO.Swagger.Model.ProjectChanged>(obj);
             switch (eventProjectChanged.ChangeType) {
@@ -449,7 +452,7 @@ namespace Base {
         /// Handles changes on project
         /// </summary>
         /// <param name="obj">Message from server</param>
-        private void HandleOverrideUpdated(string obj) {            
+        private void HandleOverrideUpdated(string obj) {
             ProjectManager.Instance.ProjectChanged = true;
             IO.Swagger.Model.OverrideUpdated overrideUpdated = JsonConvert.DeserializeObject<IO.Swagger.Model.OverrideUpdated>(obj);
             switch (overrideUpdated.ChangeType) {
@@ -494,7 +497,7 @@ namespace Base {
         /// <param name="data">Message from server</param>
         private void HandleShowMainScreen(string data) {
             IO.Swagger.Model.ShowMainScreen showMainScreenEvent = JsonConvert.DeserializeObject<IO.Swagger.Model.ShowMainScreen>(data);
-            OnShowMainScreen?.Invoke(this, new ShowMainScreenEventArgs(showMainScreenEvent.Data));            
+            OnShowMainScreen?.Invoke(this, new ShowMainScreenEventArgs(showMainScreenEvent.Data));
         }
 
         private void HandleRobotMoveToActionPointOrientation(string data) {
@@ -544,7 +547,7 @@ namespace Base {
                 return;
             }
             try {
-                
+
                 IO.Swagger.Model.CurrentAction currentActionEvent = JsonConvert.DeserializeObject<IO.Swagger.Model.CurrentAction>(obj);
 
                 puck_id = currentActionEvent.Data.ActionId;
@@ -566,7 +569,7 @@ namespace Base {
             } catch (ItemNotFoundException ex) {
                 Debug.LogError(ex);
             }
-            
+
         }
 
         /// <summary>
@@ -596,7 +599,7 @@ namespace Base {
         }
 
         /// <summary>
-        /// Decodes project exception 
+        /// Decodes project exception
         /// </summary>
         /// <param name="data">Message from server</param>
         private void HandleProjectException(string data) {
@@ -672,14 +675,14 @@ namespace Base {
                     foreach (ObjectTypeMeta type in objectTypesChangedEvent.Data)
                         ActionsManager.Instance.ObjectTypeRemoved(type);
                     break;
-                
+
                 default:
                     throw new NotImplementedException();
             }
         }
 
         /// <summary>
-        /// Decodes changes on actions and invokes proper callback 
+        /// Decodes changes on actions and invokes proper callback
         /// </summary>
         /// <param name="data">Message from server</param>
         private void HandleActionChanged(string data) {
@@ -1042,7 +1045,7 @@ namespace Base {
         /// <param name="endEffectorId">Id of end effector</param>
         /// <returns></returns>
         public async Task UpdateActionPointUsingRobot(string actionPointId, string robotId, string endEffectorId) {
-            
+
             int r_id = Interlocked.Increment(ref requestID);
             IO.Swagger.Model.RobotArg robotArg = new IO.Swagger.Model.RobotArg(robotId: robotId, endEffector: endEffectorId);
             IO.Swagger.Model.UpdateActionPointUsingRobotRequestArgs args = new IO.Swagger.Model.UpdateActionPointUsingRobotRequestArgs(actionPointId: actionPointId,
@@ -1088,7 +1091,7 @@ namespace Base {
         /// <returns></returns>
         public async Task UpdateActionObjectPoseUsingRobot(string actionObjectId, string robotId, string endEffectorId,
             IO.Swagger.Model.UpdateObjectPoseUsingRobotRequestArgs.PivotEnum pivot) {
-            
+
             int r_id = Interlocked.Increment(ref requestID);
             IO.Swagger.Model.RobotArg robotArg = new IO.Swagger.Model.RobotArg(robotId: robotId, endEffector: endEffectorId);
             IO.Swagger.Model.UpdateObjectPoseUsingRobotRequestArgs args = new IO.Swagger.Model.UpdateObjectPoseUsingRobotRequestArgs
@@ -1099,7 +1102,7 @@ namespace Base {
             IO.Swagger.Model.UpdateObjectPoseUsingRobotResponse response = await WaitForResult<IO.Swagger.Model.UpdateObjectPoseUsingRobotResponse>(r_id);
             if (response == null || !response.Result)
                 throw new RequestFailedException(response == null ? "Request timed out" : response.Messages[0]);
-     
+
         }
 
         /// <summary>
@@ -1233,10 +1236,10 @@ namespace Base {
                 throw new RequestFailedException(response == null ? "Request timed out" : response.Messages[0]);
             }
         }
-        
+
         /// <summary>
         /// Asks server to remove object from scene.
-        /// 
+        ///
         /// </summary>
         /// <param name="id">ID of action object</param>
         /// <param name="force">Indicates whether or not it should be forced</param>
@@ -1246,7 +1249,7 @@ namespace Base {
             IO.Swagger.Model.RemoveFromSceneRequestArgs args = new IO.Swagger.Model.RemoveFromSceneRequestArgs(id: id, force: force);
             IO.Swagger.Model.RemoveFromSceneRequest request = new IO.Swagger.Model.RemoveFromSceneRequest(id: r_id, request: "RemoveFromScene", args: args);
             SendDataToServer(request.ToJson(), r_id, true);
-            return await WaitForResult<IO.Swagger.Model.RemoveFromSceneResponse>(r_id);            
+            return await WaitForResult<IO.Swagger.Model.RemoveFromSceneResponse>(r_id);
         }
 
         /// <summary>
@@ -1547,7 +1550,7 @@ namespace Base {
             SendDataToServer(request.ToJson(), r_id, true);
             IO.Swagger.Model.AddActionPointResponse response = await WaitForResult<IO.Swagger.Model.AddActionPointResponse>(r_id);
 
-            if (response == null || !response.Result)   
+            if (response == null || !response.Result)
                 throw new RequestFailedException(response == null ? "Request timed out" : response.Messages[0]);
         }
 
@@ -1797,7 +1800,7 @@ namespace Base {
                 throw new RequestFailedException(response == null ? "Request timed out" : response.Messages[0]);
         }
 
-        
+
         /// <summary>
         /// Asks server to move selected robot to action point, using joints
         /// Throws RequestFailedException when request failed
@@ -2113,7 +2116,7 @@ namespace Base {
             IO.Swagger.Model.RegisterForRobotEventRequest request = new IO.Swagger.Model.RegisterForRobotEventRequest(r_id, "RegisterForRobotEvent", args);
             SendDataToServer(request.ToJson(), r_id, true);
             IO.Swagger.Model.RegisterForRobotEventResponse response = await WaitForResult<IO.Swagger.Model.RegisterForRobotEventResponse>(r_id);
-            
+
             // TODO: is this correct?
             return response == null ? false : response.Result;
         }
@@ -2178,7 +2181,7 @@ namespace Base {
                 throw new RequestFailedException(response == null ? new List<string>() { "Failed to stop scene" } : response.Messages);
             }
         }
-        
+
         public async Task AddOverride(string id, IO.Swagger.Model.Parameter parameter, bool dryRun) {
             int r_id = Interlocked.Increment(ref requestID);
             IO.Swagger.Model.AddOverrideRequestArgs args = new AddOverrideRequestArgs(id: id, _override: parameter);
@@ -2216,5 +2219,5 @@ namespace Base {
 
     }
 
-    
+
 }

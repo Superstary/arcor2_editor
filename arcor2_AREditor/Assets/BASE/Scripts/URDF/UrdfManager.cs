@@ -10,6 +10,7 @@ using RosSharp.Urdf.Runtime;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class UrdfManager : Singleton<UrdfManager> {
 
     /// <summary>
@@ -22,7 +23,7 @@ public class UrdfManager : Singleton<UrdfManager> {
     /// Dictionary of all loaded urdf robot models. Key = type of robot (e.g. magician), Value = list of RobotModels (including its instances).
     /// </summary>
     private Dictionary<string, List<RobotModel>> RobotModels = new Dictionary<string, List<RobotModel>>();
-    
+
 
     /// <summary>
     /// Downloads URDF package for selected robot and stores them to file.
@@ -217,7 +218,7 @@ public class UrdfManager : Singleton<UrdfManager> {
     /// <summary>
     /// Checks that newer version of robot model exists on the server.
     /// Returns true if so or if there is no downloaded zip file with the robot model at all,
-    /// false if downloaded zip file is already at its newest version. 
+    /// false if downloaded zip file is already at its newest version.
     /// </summary>
     /// <param name="fileName">Full path with the urdf zip file containing the robot model.</param>
     /// <param name="robotType">Type of the robot.</param>
