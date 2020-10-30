@@ -11,12 +11,12 @@ namespace Base {
 
         private Dictionary<string, ActionObjectMetadata> actionObjectsMetadata = new Dictionary<string, ActionObjectMetadata>();
        // private Dictionary<string, ServiceMetadata> servicesMetadata = new Dictionary<string, ServiceMetadata>();
-        
+
         public Action CurrentlyRunningAction = null;
-        
+
         public event EventHandler OnServiceMetadataUpdated, OnActionsLoaded;
 
-        
+
         public GameObject ParameterInputPrefab, ParameterDropdownPrefab, ParameterDropdownPosesPrefab,
             ParameterDropdownJointsPrefab, ActionPointOrientationPrefab, ParameterRelPosePrefab,
             ParameterBooleanPrefab;
@@ -43,26 +43,26 @@ namespace Base {
         }
 
         private void Start() {
-            Debug.Assert(ParameterInputPrefab != null);
+            /*Debug.Assert(ParameterInputPrefab != null);
             Debug.Assert(ParameterDropdownPrefab != null);
             Debug.Assert(ParameterDropdownPosesPrefab != null);
             Debug.Assert(ParameterDropdownJointsPrefab != null);
             Debug.Assert(ParameterRelPosePrefab != null);
-            Debug.Assert(InteractiveObjects != null);
+            Debug.Assert(InteractiveObjects != null);*/
             Init();
             WebsocketManager.Instance.OnDisconnectEvent += OnDisconnected;
         }
-        
+
         private void OnDisconnected(object sender, EventArgs args) {
             Init();
         }
 
         private void Update() {
             if (!ActionsReady && ActionObjectsLoaded) {
-                
+
                 foreach (ActionObjectMetadata ao in ActionObjectMetadata.Values) {
                     if (!ao.Disabled && !ao.ActionsLoaded) {
-                       
+
                         return;
                     }
                 }
@@ -93,7 +93,7 @@ namespace Base {
         }
 
 
-        /*  
+        /*
           public async Task UpdateServicesMetadata(List<IO.Swagger.Model.ServiceTypeMeta> newServices) {
               foreach (IO.Swagger.Model.ServiceTypeMeta newServiceMeta in newServices) {
                   ServiceMetadata serviceMetadata = new ServiceMetadata(newServiceMeta);
@@ -118,17 +118,17 @@ namespace Base {
             if (actionObjectsMetadata.ContainsKey(objectType.Type)) {
                 actionObjectsMetadata.Remove(objectType.Type);
                 OnActionObjectsUpdated?.Invoke(this, new StringEventArgs(null));
-            }            
+            }
         }
 
         public async void ObjectTypeAdded(ObjectTypeMeta objectType) {
             ActionObjectMetadata m = new ActionObjectMetadata(meta: objectType);
             await UpdateActionsOfActionObject(m);
-            m.Robot = IsDescendantOfType("Robot", m);               
+            m.Robot = IsDescendantOfType("Robot", m);
             actionObjectsMetadata.Add(objectType.Type, m);
             OnActionObjectsUpdated?.Invoke(this, new StringEventArgs(objectType.Type));
         }
-        
+
 
         private async Task UpdateActionsOfActionObject(ActionObjectMetadata actionObject) {
             if (!actionObject.Disabled)
@@ -141,10 +141,10 @@ namespace Base {
                     actionObject.ActionsLoaded = true;
                 } catch (RequestFailedException e) {
                     Debug.LogError("Failed to load action for object " + name);
-                    Notifications.Instance.ShowNotification("Failed to load actions", "Failed to load action for object " + name);                    
-                }            
+                    Notifications.Instance.ShowNotification("Failed to load actions", "Failed to load action for object " + name);
+                }
         }
-        
+
 
         private Dictionary<string, ActionMetadata> ParseActions(List<IO.Swagger.Model.ObjectAction> actions) {
             if (actions == null) {
@@ -176,7 +176,7 @@ namespace Base {
             return metadata;
         }
         private void UpdateActionServices(object sender, EventArgs eventArgs) {
-            
+
         }
 
         public async Task UpdateObjects(List<IO.Swagger.Model.ObjectTypeMeta> newActionObjectsMetadata, string highlighteObject = null) {
@@ -220,19 +220,19 @@ namespace Base {
 
         public Dictionary<IActionProvider, List<ActionMetadata>> GetAllActions() {
             Dictionary<IActionProvider, List<ActionMetadata>> actionsMetadata = new Dictionary<IActionProvider, List<ActionMetadata>>();
-            foreach (ActionObject ao in SceneManager.Instance.ActionObjects.Values) {               
+            foreach (ActionObject ao in SceneManager.Instance.ActionObjects.Values) {
                 if (!actionObjectsMetadata.TryGetValue(ao.Data.Type, out ActionObjectMetadata aom)) {
                     continue;
                 }
                 if (aom.ActionsMetadata.Count > 0) {
-                    actionsMetadata[ao] = aom.ActionsMetadata.Values.ToList();                    
-                }                
+                    actionsMetadata[ao] = aom.ActionsMetadata.Values.ToList();
+                }
             }
             return actionsMetadata;
         }
 
 
-        
+
     }
 }
 
