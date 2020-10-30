@@ -324,7 +324,11 @@ namespace Base {
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+
+>>>>>>> Stashed changes
 
 
 >>>>>>> Stashed changes
@@ -383,7 +387,11 @@ namespace Base {
         /// </summary>
         /// <param name="obj">Message from server</param>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         private async void HandleProjectChanged(string obj) {            
+=======
+        private void HandleProjectChanged(string obj) {
+>>>>>>> Stashed changes
 =======
         private void HandleProjectChanged(string obj) {
 >>>>>>> Stashed changes
@@ -485,9 +493,12 @@ namespace Base {
             }
             try {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 
                 IO.Swagger.Model.CurrentActionEvent currentActionEvent = JsonConvert.DeserializeObject<IO.Swagger.Model.CurrentActionEvent>(obj);
 =======
+=======
+>>>>>>> Stashed changes
 
                 IO.Swagger.Model.CurrentAction currentActionEvent = JsonConvert.DeserializeObject<IO.Swagger.Model.CurrentAction>(obj);
 >>>>>>> Stashed changes
@@ -1008,8 +1019,13 @@ namespace Base {
         /// <returns></returns>
         public async Task UpdateActionObjectPoseUsingRobot(string actionObjectId, string robotId, string endEffectorId,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             IO.Swagger.Model.UpdateObjectPoseUsingRobotArgs.PivotEnum pivot) {
             
+=======
+            IO.Swagger.Model.UpdateObjectPoseUsingRobotRequestArgs.PivotEnum pivot) {
+
+>>>>>>> Stashed changes
 =======
             IO.Swagger.Model.UpdateObjectPoseUsingRobotRequestArgs.PivotEnum pivot) {
 

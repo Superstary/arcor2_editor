@@ -119,16 +119,22 @@ PlayerSettings:
     5:4: 1
     16:10: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     16:9: 0
     Others: 0
   bundleVersion: 0.9.0-beta.1
   preloadedAssets:
   - {fileID: 11400000, guid: 20a9bcdf4f5308b4cbe95702f502a097, type: 2}
 =======
+=======
+>>>>>>> Stashed changes
     16:9: 1
     Others: 1
   bundleVersion: 9.5
   preloadedAssets: []
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   metroInputSource: 0
   wsaTransparentSwapchain: 0
