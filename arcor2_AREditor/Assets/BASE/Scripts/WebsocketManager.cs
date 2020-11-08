@@ -104,7 +104,10 @@ namespace Base {
 
         private void Start()
         {
-            ConnectToServer("192.168.0.9", 6789);
+          //  #if !UNITY_EDITOR
+          Debug.Log("Connecting ...");
+             ConnectToServer("192.168.0.9", 6789);
+          //  #endif
         }
         /// <summary>
         /// Callbeck when connection to the server is closed

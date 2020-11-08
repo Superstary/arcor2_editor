@@ -28,11 +28,14 @@ public class GridOverlay : MonoBehaviour {
     private int middleX;
 
     private void Start() {
+#if UNITY_EDITOR
         Camera.onPostRender += OnCameraPostRender;
 
         middleZ = gridSizeZ / 2;
         middleY = gridSizeY / 2;
         middleX = gridSizeX / 2;
+#endif
+
     }
 
     private void CreateLineMaterial() {
@@ -88,7 +91,7 @@ public class GridOverlay : MonoBehaviour {
 
         if (showMain) {
             GL.Color(mainColor);
-            
+
             //Layers
             for (float j = 0; j <= gridSizeY; j += largeStep) {
                 //X axis lines

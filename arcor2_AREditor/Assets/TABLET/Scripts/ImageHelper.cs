@@ -21,10 +21,14 @@ public class ImageHelper
         Sprite NewSprite;
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         Texture2D SpriteTexture = NativeCamera.LoadImageAtPath(filePath, 500, false);
-#elif UNITY_EDITOR || UNITY_STANDALONE
-        Texture2D SpriteTexture = LoadTexture(filePath);        
-#endif
         NewSprite = Sprite.Create(SpriteTexture, new Rect(0, 0, SpriteTexture.width, SpriteTexture.height), new Vector2(0, 0), pixelsPerUnit);
+#elif UNITY_EDITOR || UNITY_STANDALONE
+        Texture2D SpriteTexture = LoadTexture(filePath);
+        NewSprite = Sprite.Create(SpriteTexture, new Rect(0, 0, SpriteTexture.width, SpriteTexture.height), new Vector2(0, 0), pixelsPerUnit);
+#elif  UNITY_WSA
+        NewSprite = null;
+#endif
+
 
         return NewSprite;
     }
@@ -54,7 +58,7 @@ public class ImageHelper
         binary.Write(bytes);
         file.Close();
     }
-    
+
     public async static Task<string> OpenImageDialog() {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         waitingForCallback = true;
@@ -65,7 +69,7 @@ public class ImageHelper
             }
         });
         return pathToReturn;
-        
+
 #elif UNITY_EDITOR || UNITY_STANDALONE
 
 
@@ -78,6 +82,8 @@ public class ImageHelper
             return null;
         else
             return paths[0];
+#elif UNITY_WSA
+    return null;
 #endif
     }
 
