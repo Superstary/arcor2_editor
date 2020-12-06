@@ -1,23 +1,23 @@
 {
-    "scopedRegistries": [
-        {
-            "name": "Packages from jillejr",
-            "url": "https://registry.npmjs.org/",
-            "scopes": [
-                "jillejr"
-            ]
-        },
-        {
-            "name": "Vuforia",
-            "url": "https://registry.packages.developer.vuforia.com/",
-            "scopes": [
-                "com.ptc.vuforia"
-            ]
-        }
-    ],
-    "dependencies": {
-    "com.ptc.vuforia.engine": "9.5.4",
+  "scopedRegistries": [
+    {
+      "name": "Packages from jillejr",
+      "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity/",
+      "scopes": [
+        "jillejr"
+      ]
+    },
+    {
+      "name": "Vuforia",
+      "url": "https://registry.packages.developer.vuforia.com/",
+      "scopes": [
+        "com.ptc.vuforia"
+      ]
+    }
+  ],
+  "dependencies": {
     "com.google.ar.core.arfoundation.extensions": "https://github.com/google-ar/arcore-unity-extensions.git",
+    "com.ptc.vuforia.engine": "9.5.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ads": "3.4.4",
@@ -37,6 +37,8 @@
     "com.unity.xr.arkit": "4.0.2",
     "com.unity.xr.arkit-face-tracking": "4.0.2",
     "com.unity.xr.windowsmr.metro": "4.2.3",
+    "jillejr.newtonsoft.json-for-unity": "12.0.301",
+    "jillejr.newtonsoft.json-for-unity.converters": "1.1.0-preview.2",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

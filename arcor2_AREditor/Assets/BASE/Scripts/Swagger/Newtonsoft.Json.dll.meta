@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cc9f2910ef5a04b3384ce40a841af491
+guid: 9b6ba260dada0ea4a871a42011f8b87d
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -12,6 +12,47 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
+      : Any
+    second:
+      enabled: 0
+      settings:
+        Exclude Editor: 1
+        Exclude Linux64: 1
+        Exclude OSXUniversal: 1
+        Exclude Win: 1
+        Exclude Win64: 1
+        Exclude WindowsStoreApps: 1
+  - first:
+      : Linux
+    second:
+      enabled: 0
+      settings:
+        CPU: x86
+  - first:
+      : OSXIntel
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      : OSXIntel64
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      : SamsungTV
+    second:
+      enabled: 0
+      settings:
+        STV_MODEL: STANDARD_13
+  - first:
+      Android: Android
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
       Any: 
     second:
       enabled: 1
@@ -21,13 +62,50 @@ PluginImporter:
     second:
       enabled: 0
       settings:
+        CPU: AnyCPU
         DefaultValueInitialized: true
+        OS: AnyOS
+  - first:
+      Standalone: Linux64
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Standalone: OSXUniversal
+    second:
+      enabled: 0
+      settings:
+        CPU: x86_64
+  - first:
+      Standalone: Win
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Standalone: Win64
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
   - first:
       Windows Store Apps: WindowsStoreApps
     second:
       enabled: 0
       settings:
         CPU: AnyCPU
+        DontProcess: false
+        PlaceholderPath: 
+        SDK: AnySDK
+        ScriptingBackend: Il2Cpp
+  - first:
+      iPhone: iOS
+    second:
+      enabled: 0
+      settings:
+        CompileFlags: 
+        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 
